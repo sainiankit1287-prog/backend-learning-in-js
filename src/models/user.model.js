@@ -49,11 +49,38 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-  this.password = bcrypt.hash(this.password, 10);
-  next();
+// userSchema.pre("save", async function (next) {
+//   if (!this.isModified("password")) return next();
+//   this.password = await bcrypt.hash(this.password, 10);
+//   next();
+// });
+
+/**
+ 🧠 Why error happens:
+async function automatically returns a Promise
+Mongoose handles it internally
+But you are also calling next() → conflict ❌
+So sometimes next becomes undefined → error
+ */
+
+
+/*
+use of this function
+ 🔐 Password Hashing Middleware (What this function does)
+Runs before saving a user document (pre("save"))
+Checks if the password field was modified
+Skips hashing if password is unchanged
+Uses bcrypt to hash the password securely
+Replaces plain text password with hashed password
+Prevents storing passwords in plain text
+Automatically improves security of user data
+Works only with .save() (not with update queries)
+*/
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
+  this.password = await bcrypt.hash(this.password, 10);
 });
+
 // isPasswordCorrect is a varible
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
@@ -77,10 +104,10 @@ userSchema.methods.generateRefreshToken = function () {
     {
       _id: this._id,
     },
-    process.env.REFRESH_TOKEN_SECERT,
+    process.env.REFRESH_TOKEN_SECRET,
     {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
     }
   );
 };
-export const User = mongoose.model("User", userSchema);
+export const User = mongoose.model("User", userSchema); //User can interact with database easily

@@ -17,4 +17,16 @@ app.use(express.urlencoded({extended:true,limit:"16kb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
 
+
+//routes import
+import userRouter from "./routes/user.routes.js";
+
+
+//routes declaration
+app.use("/users",userRouter) // over direct users we use versioning in api like /api/v1/users
+
+// work flow of this on url==> /users->userRouter->./routes/user.routes.js->/register->post() method send to ->../controllers/user.controller.js->then asyncHandler() function call and control go to ->../utils/asyncHandler.js
+// how url create 
+// http://localhost:8000/api/v1/users/register
+// http://localhost:8000/users/register
 export {app}
