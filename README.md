@@ -50,47 +50,123 @@ CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```
 
+---
+
+## 📁 Project Structure
+
+```
+chai-and-backend/
+├── public/
+│   └── temp/                    # Temporary file storage
+├── src/
+│   ├── app.js                   # Main Express application setup
+│   ├── constants.js             # Application constants
+│   ├── index.js                 # Server entry point
+│   ├── controllers/
+│   │   └── user.controller.js   # User-related operations (register, login, profile)
+│   ├── db/
+│   │   └── index.js             # MongoDB connection setup
+│   ├── middlewares/
+│   │   ├── auth.middleware.js   # JWT authentication middleware
+│   │   └── multer.middleware.js # File upload handling
+│   ├── models/
+│   │   ├── subscription.model.js # Subscription schema
+│   │   ├── user.model.js        # User schema with authentication
+│   │   └── video.model.js       # Video content schema
+│   ├── routes/
+│   │   └── user.routes.js       # User-related API routes
+│   └── utils/
+│       ├── ApiError.js          # Custom error class for API responses
+│       ├── ApiResponse.js       # Standardized API response format
+│       ├── asyncHandler.js      # Wrapper for async route handlers
+│       ├── cloudinary.js        # Cloudinary integration for uploads
+│       └── deleteFromCloudinary.js # Utility to delete Cloudinary files
+├── package.json                 # Dependencies and scripts
+└── README.md                    # Project documentation
+```
+
+---
+
+## 🔧 Features
+
+- **User Authentication**: JWT-based authentication with access and refresh tokens
+- **File Uploads**: Avatar and video uploads using Multer and Cloudinary
+- **Video Management**: Complete video upload, storage, and management system
+- **User Profiles**: Channel profiles, watch history, and user management
+- **Subscriptions**: User subscription system for channel relationships
+- **Error Handling**: Comprehensive error handling with custom error classes
+- **CORS Support**: Configurable CORS for frontend integration
+- **Database Integration**: MongoDB with Mongoose ODM
+
+---
+
+## 📡 API Endpoints
+
+### User Routes (`/api/v1/users`)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/register` | Register a new user |
+| POST | `/login` | User login |
+| POST | `/logout` | User logout |
+| POST | `/refresh-token` | Refresh access token |
+| POST | `/change-password` | Change user password |
+| GET | `/current-user` | Get current user profile |
+| PATCH | `/update-account` | Update account details |
+| PATCH | `/update-avatar` | Update user avatar |
+| PATCH | `/update-cover-image` | Update cover image |
+| GET | `/c/:username` | Get user channel profile |
+| GET | `/watch-history` | Get user watch history |
+
+---
+
+## 🛠️ Technologies Used
+
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB with Mongoose
+- **Authentication**: JWT (JSON Web Tokens)
+- **File Storage**: Cloudinary
+- **File Uploads**: Multer
+- **Environment**: dotenv
+- **Security**: bcrypt for password hashing
+- **Validation**: Custom validation middleware
+
+---
+
+## 🚀 Deployment
+
+1. Set up your production environment variables
+2. Ensure MongoDB is running and accessible
+3. Configure Cloudinary credentials
+4. Run `npm start` for production
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 📞 Support
+
+For support, email support@example.com or join our Discord channel.
+```
+
 > **Note:** Ensure all environment variables are properly set before running the application.
 
 ---
 
-## 🗂 Project Structure
-
-```
-chai-and-backend/
-├── .env                        # Environment variables (create this file)
-├── .gitignore                  # Git ignore rules
-├── .prettierrc                 # Prettier code formatting configuration
-├── .prettierignore             # Files to ignore for Prettier formatting
-├── package.json                # Dependencies and scripts
-├── package-lock.json           # Lockfile for exact dependency versions
-├── README.md                   # Project documentation
-├── public/
-│   └── temp/                    # Temporary file storage for uploads
-├── src/
-│   ├── app.js                  # Express app configuration and middleware setup
-│   ├── constants.js            # Application constants (DB_NAME)
-│   ├── index.js                # Application entry point
-│   ├── controllers/
-│   │   └── user.controller.js  # User-related business logic
-│   ├── db/
-│   │   └── index.js            # MongoDB connection setup
-│   ├── middlewares/
-│   │   └── multer.middleware.js # File upload middleware configuration
-│   ├── models/
-│   │   ├── user.model.js       # User schema with authentication methods
-│   │   └── video.model.js      # Video schema with pagination support
-│   ├── routes/
-│   │   └── user.routes.js      # User API routes
-│   └── utils/
-│       ├── ApiError.js         # Custom error handling class
-│       ├── ApiResponse.js      # Standardized API response class
-│       ├── asyncHandler.js     # Async route handler wrapper
-│       └── cloudinary.js       # Cloudinary file upload utility
-└── node_modules/               # Installed dependencies (auto-generated)
-```
-
----
 
 ## ✅ Features
 
@@ -254,7 +330,7 @@ This project is released under the ISC License.
 
 ## 👨‍💻 Author
 
-**Ankit** - Backend learning
+**Ankit** - Backend learner
 
 ---
 
