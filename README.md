@@ -1,8 +1,22 @@
 # Chai And Backend
 
-A comprehensive Node.js + Express backend API for a video-sharing platform, featuring user authentication, file uploads, and video management using MongoDB and Cloudinary.
+A comprehensive Node.js + Express backend API for a video-sharing platform, featuring user authentication, JWT-based security, file uploads with Cloudinary, and video management using MongoDB.
 
-> This project serves as a robust backend starter/boilerplate for building scalable video-sharing applications with secure authentication, media handling, and database integration.
+> This project serves as a robust backend starter/boilerplate for building scalable video-sharing applications with secure authentication, media handling, database integration, and modern best practices.
+
+---
+
+## ✨ Features
+
+- **User Authentication**: Secure JWT-based authentication with access and refresh tokens
+- **Password Security**: Bcrypt-based password hashing and verification
+- **File Upload Management**: Integration with Cloudinary for media file management
+- **Video Management**: Full CRUD operations for video content with pagination support
+- **User Subscriptions**: Support for user subscription tracking and management
+- **Middleware**: Custom authentication and file upload (Multer) middleware
+- **Error Handling**: Centralized API error handling and consistent response formats
+- **CORS Support**: Configured for cross-origin requests
+- **Environment Configuration**: Flexible environment-based configuration
 
 ---
 
@@ -48,6 +62,42 @@ REFRESH_TOKEN_EXPIRY=7d
 CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+```
+
+---
+
+## 📦 Dependencies
+
+- **Express** - Web framework
+- **Mongoose** - MongoDB ODM
+- **JWT** - JSON Web Tokens for authentication
+- **Bcrypt** - Password hashing
+- **Cloudinary** - Cloud file storage and management
+- **Multer** - File upload middleware
+- **Cookie Parser** - Cookie parsing middleware
+- **CORS** - Cross-Origin Resource Sharing
+- **Nodemon** - Development server auto-reload
+
+---
+
+## 🛠 Available Scripts
+
+```bash
+# Start development server with auto-reload
+npm run dev
+```
+
+---
+
+## 👨‍💻 Author
+
+Ankit
+
+---
+
+## 📝 License
+
+ISC
 ```
 
 ---

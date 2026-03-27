@@ -36,5 +36,6 @@ const videoSchema= new Schema(
             ref:"User"
         }
     },{timestamps:true})
+//.plugin(mongooseAggregatePaginate) is alow to write aggregation pipeline   
 videoSchema.plugin(mongooseAggregatePaginate)
 export const Video= mongoose.model("Video",videoSchema)

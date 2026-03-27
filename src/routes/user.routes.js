@@ -1,5 +1,17 @@
 import { Router } from "express";
-import { loginUser, logoutUser, refreshAccessToken, registerUser, updateUserAvatar } from "../controllers/user.controller.js";
+import { loginUser,
+         logoutUser,
+         refreshAccessToken,
+         registerUser, 
+         updateUserAvatar, 
+         updateUserCoverImage, 
+         changeCurrentPassword,
+         getCurrentUser,
+         updateAccountDetails, 
+         getUserChannelProfile,
+         getWatchHistory
+        
+        } from "../controllers/user.controller.js";
 import {upload} from "../middlewares/multer.middleware.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -37,10 +49,29 @@ router.route("/refresh-token").post(refreshAccessToken)
 //     ])
 //     ,updateUserAvatar)
 
+
+
+
+
+//update the password changeCurrentPassword
+router.route("/change-Current-password").post(verifyJWT, changeCurrentPassword);
+router.route("/get-user").get(verifyJWT,getCurrentUser);
+router.route("/update-details").patch(verifyJWT,updateAccountDetails)
+
+
 // this is use for single upload file and we access the localpath=req.file?.path
-router.route("/update-User-Avatar").post(
+
+router.route("/update-User-Avatar").patch(
+    verifyJWT,
     upload.single("avatar"),
     updateUserAvatar
 )
+//update coverImage 
+router.route("/update-User-coverImage").patch(
+        verifyJWT,
+        upload.single("coverImage"),
+        updateUserCoverImage)
 
+router.route("/c/:username").get(verifyJWT,getUserChannelProfile)    
+router.route("/history").get(verifyJWT,getWatchHistory)    
 export default router;
