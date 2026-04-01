@@ -7,10 +7,6 @@ const videoSchema= new Schema(
             type:String,//cloudinary url
             required:true,
         },
-        thumbnail:{
-            type:String,
-            required:true,
-        },
         title:{
             type:String,
             required:true,
@@ -36,6 +32,6 @@ const videoSchema= new Schema(
             ref:"User"
         }
     },{timestamps:true})
-//.plugin(mongooseAggregatePaginate) is alow to write aggregation pipeline   
+//.plugin(mongooseAggregatePaginate) is allow to write aggregation pipeline   
 videoSchema.plugin(mongooseAggregatePaginate)
 export const Video= mongoose.model("Video",videoSchema)

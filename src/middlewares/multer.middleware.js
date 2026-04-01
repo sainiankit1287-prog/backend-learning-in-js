@@ -12,6 +12,9 @@ const storage=multer.diskStorage({
 })
 export const upload=multer({
     storage,
+     limits: {
+        fileSize: 1024 * 1024 * 1000 // ✅ 500 MB
+    }
 })
 
 // if multiple file are uploaded then can overwrite so try give unique name to file  

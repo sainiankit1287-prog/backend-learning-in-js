@@ -11,12 +11,18 @@ A comprehensive Node.js + Express backend API for a video-sharing platform, feat
 - **User Authentication**: Secure JWT-based authentication with access and refresh tokens
 - **Password Security**: Bcrypt-based password hashing and verification
 - **File Upload Management**: Integration with Cloudinary for media file management
-- **Video Management**: Full CRUD operations for video content with pagination support
+- **Video Management**: Full CRUD operations for video content with advanced search, filtering, and pagination
+- **Video Metadata**: Track views, duration, and creator information
+- **Comments System**: Users can comment on videos with proper ownership tracking
+- **Likes Feature**: Like videos, comments, and tweets with relationship management
+- **Playlists**: Create and manage custom video playlists
+- **Tweets/Short Posts**: Activity feed with tweet-like functionality
 - **User Subscriptions**: Support for user subscription tracking and management
-- **Middleware**: Custom authentication and file upload (Multer) middleware
+- **Middleware**: Custom authentication and file upload (Multer) middleware with size limits
 - **Error Handling**: Centralized API error handling and consistent response formats
 - **CORS Support**: Configured for cross-origin requests
 - **Environment Configuration**: Flexible environment-based configuration
+- **Advanced Querying**: MongoDB aggregation pipelines for optimal performance
 
 ---
 
@@ -36,6 +42,94 @@ npm run dev
 ```
 
 The server runs on `http://localhost:8000` by default (configurable via `PORT` in `.env`).
+
+---
+
+## 📚 API Endpoints
+
+### Video Routes (`/videos`)
+All video routes require JWT authentication.
+
+- **GET** `/videos/get-All-Video` - Fetch all videos with advanced filtering & pagination
+  - Query Parameters:
+    - `page` (int, default: 1) - Page number
+    - `limit` (int, default: 10, max: 30) - Items per page
+    - `query` (string) - Search videos by title (case-insensitive)
+    - `sortBy` (string) - Sort field: `createdAt`, `views`, `duration`, or `title`
+    - `sortType` (string) - Sort order: `asc` or `desc`
+    - `userId` (ObjectId) - Filter videos by owner
+
+- **POST** `/videos/publish-A-video` - Upload and publish a new video
+  - Body: `multipart/form-data`
+    - `title` (string, required) - Video title
+    - `description` (string, required) - Video description
+    - `videoFile` (file, required) - Video file (max 1GB)
+  - Response: Returns video URL and metadata after successful upload
+
+### User Routes (`/users`)
+- User registration, login, and profile management
+
+---
+
+## 🗄️ Database Models
+
+### Video Model
+```javascript
+{
+  videoFile: String (Cloudinary URL),
+  title: String,
+  description: String,
+  duration: Number,
+  views: { type: Number, default: 0 },
+  isPublished: { type: Boolean, default: true },
+  owner: ObjectId (Reference to User),
+  timestamps: true
+}
+```
+
+### Comment Model
+```javascript
+{
+  content: String,
+  video: ObjectId (Reference to Video),
+  owner: ObjectId (Reference to User),
+  timestamps: true
+}
+```
+
+### Likes Model
+```javascript
+{
+  comment: ObjectId (Reference to Comment),
+  video: ObjectId (Reference to Video),
+  tweet: ObjectId (Reference to Tweet),
+  likedBy: ObjectId (Reference to User),
+  timestamps: true
+}
+```
+
+### Playlist Model
+```javascript
+{
+  name: String,
+  description: String,
+  videos: [ObjectId] (Array of Video references),
+  owner: ObjectId (Reference to User),
+  timestamps: true
+}
+```
+
+### Tweet Model
+```javascript
+{
+  content: String,
+  owner: ObjectId (Reference to User),
+  timestamps: true
+}
+```
+
+---
+
 
 ---
 
