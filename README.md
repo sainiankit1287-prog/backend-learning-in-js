@@ -4,6 +4,8 @@ A comprehensive Node.js + Express backend API for a video-sharing platform, feat
 
 > This project serves as a robust backend starter/boilerplate for building scalable video-sharing applications with secure authentication, media handling, database integration, and modern best practices.
 
+**Last Updated:** April 2026 | **Status:** Actively Maintained
+
 ---
 
 ## ✨ Features
