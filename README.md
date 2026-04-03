@@ -21,6 +21,7 @@ A comprehensive Node.js + Express backend API for a video-sharing platform, feat
 - **Tweets/Short Posts**: Activity feed with tweet-like functionality
 - **User Subscriptions**: Support for user subscription tracking and management
 - **Middleware**: Custom authentication and file upload (Multer) middleware with size limits
+- **File Type Security**: Strict MIME type validation middleware to protect against malicious file uploads
 - **Error Handling**: Centralized API error handling and consistent response formats
 - **CORS Support**: Configured for cross-origin requests
 - **Environment Configuration**: Flexible environment-based configuration
@@ -132,6 +133,35 @@ All video routes require JWT authentication.
 
 ---
 
+## 🔒 Security Features
+
+### File Type Validation Middleware (`strictFileCheck`)
+
+The `fileType.middleware.js` provides strict file type validation to protect against malicious file uploads:
+
+**Features:**
+- **MIME Type Validation**: Validates actual file content (not just extension) using the `file-type` library
+- **Whitelist Protection**: Only allows specific file types: JPEG, PNG, WebP, MP4, MPEG, and plain text
+- **Automatic Cleanup**: Automatically deletes files that don't match the whitelist
+- **Error Handling**: Returns HTTP 415 status for unsupported file types
+
+**Supported File Types:**
+- Images: `image/jpeg`, `image/png`, `image/webp`
+- Videos: `video/mp4`, `video/mpeg`
+- Text: `text/plain`
+
+**Usage:**
+```javascript
+import { strictFileCheck } from "./middlewares/fileType.middleware.js";
+
+// Apply to file upload routes
+router.post('/upload', upload.array('files'), strictFileCheck, controller);
+```
+
+**Protection Against:**
+- Disguised executable files (e.g., `.exe` renamed to `.jpg`)
+- Malicious scripts uploaded as documents
+- Unauthorized file type infiltration
 
 ---
 
