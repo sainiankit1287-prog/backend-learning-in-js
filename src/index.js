@@ -1,33 +1,32 @@
 //import { configDotenv } from "dotenv";
+import dns from "node:dns";
+dns.setServers(["8.8.8.8"]);
 import dotenv from "dotenv";
 import { DB_NAME } from "./constants.js";
-import connectDB from "./db/index.js"; // ✅ import database before connectDB() functionuse it 
-import { app } from "./app.js"
+import connectDB from "./db/index.js"; //  import database before connectDB() functionuse it
+import { app } from "./app.js";
 dotenv.config({
-    path: './.env'
-})
+  path: "./.env",
+});
 
 connectDB()
-    .then(() => {
-
-        const server = app.listen(process.env.PORT || 8000, () => {
-            console.log(`server is running at port:${process.env.PORT}`);
-        });
-
-        // ✅ HANDLE SERVER ERRORS HERE
-        server.on("error", (error) => {
-            if (error.code === "EADDRINUSE") {
-                console.log("Port already in use");
-            } else {
-                console.log("Server Error:", error);
-            }
-        });
-
-    })
-    .catch((err) => {
-        console.log("MONGO DB CONNECTION FAILED !!", err);
+  .then(() => {
+    const server = app.listen(process.env.PORT || 8000, () => {
+      console.log(`server is running at port:${process.env.PORT}`);
     });
 
+    //
+    server.on("error", (error) => {
+      if (error.code === "EADDRINUSE") {
+        console.log("Port already in use");
+      } else {
+        console.log("Server Error:", error);
+      }
+    });
+  })
+  .catch((err) => {
+    console.log("MONGO DB CONNECTION FAILED !!", err);
+  });
 
 /*
 

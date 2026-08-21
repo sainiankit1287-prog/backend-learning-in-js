@@ -63,7 +63,6 @@ But you are also calling next() → conflict ❌
 So sometimes next becomes undefined → error
  */
 
-
 /*
 use of this function
  🔐 Password Hashing Middleware (What this function does)
@@ -84,7 +83,7 @@ userSchema.pre("save", async function () {
 // isPasswordCorrect is a varible
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
-};// function ke andar use ka password h
+}; // function ke andar use ka password h
 userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     {

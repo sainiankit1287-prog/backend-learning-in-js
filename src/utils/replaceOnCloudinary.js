@@ -1,32 +1,28 @@
 import { v2 as cloudinary } from "cloudinary";
 
-const replaceOnCloudinary = async (localFilePath, oldImageUrl) => {
-    try {
-        if (!localFilePath || !oldImageUrl) return null;
+const replaceOnCloudinary = async (localFilePath, oldUrl) => {
+  try {
+    if (!localFilePath || !oldUrl) return null;
 
-        // extract public_id from old URL
-        const parts = oldImageUrl.split("/");
-        const fileWithExt = parts.slice(parts.indexOf("upload") + 1).join("/");
-        const publicId = fileWithExt.split(".")[0];
+    // extract public_id from old URL
+    const parts = oldUrl.split("/");
+    const fileWithExt = parts.slice(parts.indexOf("upload") + 1).join("/");
+    const publicId = fileWithExt.split(".")[0];
 
-        // upload new file with same public_id (overwrite)
-        const result = await cloudinary.uploader.upload(localFilePath, {
-            public_id: publicId,
-            overwrite: true,
-            resource_type: "auto",
-        });
+    // upload new file with same public_id (overwrite)
+    const result = await cloudinary.uploader.upload(localFilePath, {
+      public_id: publicId,
+      overwrite: true,
+      resource_type: "auto",
+    });
 
-        return result;
-
-    } catch (error) {
-        console.log("Error replacing image:", error);
-        return null;
-    }
+    return result;
+  } catch (error) {
+    console.log("Error replacing old file:", error);
+    return null;
+  }
 };
 export default replaceOnCloudinary;
-
-
-
 
 // import { v2 as cloudinary } from "cloudinary";
 
@@ -41,7 +37,6 @@ export default replaceOnCloudinary;
 
 //         // const result = await cloudinary.uploader.destroy(publicId);
 
-
 //         return result;
 //     } catch (error) {
 //         console.log("Error deleting image from cloudinary:", error);
@@ -51,8 +46,7 @@ export default replaceOnCloudinary;
 
 // export default deleteFromCloudinary;
 
-
-// this from cloudinary 
+// this from cloudinary
 
 /*
 cloudinary.v2.uploader

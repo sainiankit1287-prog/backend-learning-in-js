@@ -1,17 +1,10 @@
-const asyncHandler=(requestHandler)=>{
-   return (req,res,next)=>{
-        Promise.resolve(requestHandler(req,res,next)).catch((err)=>next(err)) // you must passed req,res,next to reqestHandler
-    }
-} // to make higher order function you return it
+const asyncHandler = (requestHandler) => {
+  return (req, res, next) => {
+    Promise.resolve(requestHandler(req, res, next)).catch((err) => next(err)); // you must passed req,res,next to reqestHandler
+  };
+}; // to make higher order function you return it
 
-
-export {asyncHandler}
-
-
-
-
-
-
+export { asyncHandler };
 
 /*  higher order function
 const asyncHandler=()=>{}

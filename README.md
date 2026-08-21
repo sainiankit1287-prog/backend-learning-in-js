@@ -33,7 +33,7 @@ A comprehensive Node.js + Express backend API for a video-sharing platform, feat
 
 ```bash
 # 1) Clone the repository
-git clone <repository-url>
+git clone https://github.com/sainiankit1287-prog/backend-learning-in-js.git
 cd chai-and-backend
 
 # 2) Install dependencies
@@ -51,6 +51,7 @@ The server runs on `http://localhost:8000` by default (configurable via `PORT` i
 ## 📚 API Endpoints
 
 ### Video Routes (`/videos`)
+
 All video routes require JWT authentication.
 
 - **GET** `/videos/get-All-Video` - Fetch all videos with advanced filtering & pagination
@@ -70,13 +71,33 @@ All video routes require JWT authentication.
   - Response: Returns video URL and metadata after successful upload
 
 ### User Routes (`/users`)
-- User registration, login, and profile management
+
+- `POST /users/register` - Register a user with avatar and cover image uploads
+- `POST /users/login` - Log in and receive JWT cookies
+- `POST /users/logout` - Log out the authenticated user
+- `POST /users/refresh-token` - Refresh the access token
+- `POST /users/change-Current-password` - Change the current password
+- `GET /users/get-user` - Get the authenticated user
+- `PATCH /users/update-details` - Update account details
+- `PATCH /users/update-User-Avatar` - Update the avatar
+- `PATCH /users/update-User-coverImage` - Update the cover image
+- `GET /users/c/:username` - Get a user channel profile
+- `GET /users/history` - Get the authenticated user's watch history
+
+### Other Routes
+
+- `/tweets` - Create, read, update, and delete tweets
+- `/comments` - Add, read, update, and delete video comments
+- `/likes` - Toggle and check video likes
+- `/subscriptions` - Manage channel subscriptions and subscription stats
+- `/playlists` - Create and manage video playlists
 
 ---
 
 ## 🗄️ Database Models
 
 ### Video Model
+
 ```javascript
 {
   videoFile: String (Cloudinary URL),
@@ -91,6 +112,7 @@ All video routes require JWT authentication.
 ```
 
 ### Comment Model
+
 ```javascript
 {
   content: String,
@@ -101,6 +123,7 @@ All video routes require JWT authentication.
 ```
 
 ### Likes Model
+
 ```javascript
 {
   comment: ObjectId (Reference to Comment),
@@ -112,6 +135,7 @@ All video routes require JWT authentication.
 ```
 
 ### Playlist Model
+
 ```javascript
 {
   name: String,
@@ -123,6 +147,7 @@ All video routes require JWT authentication.
 ```
 
 ### Tweet Model
+
 ```javascript
 {
   content: String,
@@ -140,25 +165,29 @@ All video routes require JWT authentication.
 The `fileType.middleware.js` provides strict file type validation to protect against malicious file uploads:
 
 **Features:**
+
 - **MIME Type Validation**: Validates actual file content (not just extension) using the `file-type` library
 - **Whitelist Protection**: Only allows specific file types: JPEG, PNG, WebP, MP4, MPEG, and plain text
 - **Automatic Cleanup**: Automatically deletes files that don't match the whitelist
 - **Error Handling**: Returns HTTP 415 status for unsupported file types
 
 **Supported File Types:**
+
 - Images: `image/jpeg`, `image/png`, `image/webp`
 - Videos: `video/mp4`, `video/mpeg`
 - Text: `text/plain`
 
 **Usage:**
+
 ```javascript
 import { strictFileCheck } from "./middlewares/fileType.middleware.js";
 
 // Apply to file upload routes
-router.post('/upload', upload.array('files'), strictFileCheck, controller);
+router.post("/upload", upload.array("files"), strictFileCheck, controller);
 ```
 
 **Protection Against:**
+
 - Disguised executable files (e.g., `.exe` renamed to `.jpg`)
 - Malicious scripts uploaded as documents
 - Unauthorized file type infiltration
@@ -224,6 +253,7 @@ Ankit
 ## 📝 License
 
 ISC
+
 ```
 
 ---
@@ -231,34 +261,36 @@ ISC
 ## 📁 Project Structure
 
 ```
+
 chai-and-backend/
 ├── public/
-│   └── temp/                    # Temporary file storage
+│ └── temp/ # Temporary file storage
 ├── src/
-│   ├── app.js                   # Main Express application setup
-│   ├── constants.js             # Application constants
-│   ├── index.js                 # Server entry point
-│   ├── controllers/
-│   │   └── user.controller.js   # User-related operations (register, login, profile)
-│   ├── db/
-│   │   └── index.js             # MongoDB connection setup
-│   ├── middlewares/
-│   │   ├── auth.middleware.js   # JWT authentication middleware
-│   │   └── multer.middleware.js # File upload handling
-│   ├── models/
-│   │   ├── subscription.model.js # Subscription schema
-│   │   ├── user.model.js        # User schema with authentication
-│   │   └── video.model.js       # Video content schema
-│   ├── routes/
-│   │   └── user.routes.js       # User-related API routes
-│   └── utils/
-│       ├── ApiError.js          # Custom error class for API responses
-│       ├── ApiResponse.js       # Standardized API response format
-│       ├── asyncHandler.js      # Wrapper for async route handlers
-│       ├── cloudinary.js        # Cloudinary integration for uploads
-│       └── deleteFromCloudinary.js # Utility to delete Cloudinary files
-├── package.json                 # Dependencies and scripts
-└── README.md                    # Project documentation
+│ ├── app.js # Main Express application setup
+│ ├── constants.js # Application constants
+│ ├── index.js # Server entry point
+│ ├── controllers/
+│ │ └── user.controller.js # User-related operations (register, login, profile)
+│ ├── db/
+│ │ └── index.js # MongoDB connection setup
+│ ├── middlewares/
+│ │ ├── auth.middleware.js # JWT authentication middleware
+│ │ └── multer.middleware.js # File upload handling
+│ ├── models/
+│ │ ├── subscription.model.js # Subscription schema
+│ │ ├── user.model.js # User schema with authentication
+│ │ └── video.model.js # Video content schema
+│ ├── routes/
+│ │ └── user.routes.js # User-related API routes
+│ └── utils/
+│ ├── ApiError.js # Custom error class for API responses
+│ ├── ApiResponse.js # Standardized API response format
+│ ├── asyncHandler.js # Wrapper for async route handlers
+│ ├── cloudinary.js # Cloudinary integration for uploads
+│ └── deleteFromCloudinary.js # Utility to delete Cloudinary files
+├── package.json # Dependencies and scripts
+└── README.md # Project documentation
+
 ```
 
 ---
@@ -278,7 +310,7 @@ chai-and-backend/
 
 ## 📡 API Endpoints
 
-### User Routes (`/api/v1/users`)
+### User Routes (`/users`)
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -286,11 +318,11 @@ chai-and-backend/
 | POST | `/login` | User login |
 | POST | `/logout` | User logout |
 | POST | `/refresh-token` | Refresh access token |
-| POST | `/change-password` | Change user password |
-| GET | `/current-user` | Get current user profile |
-| PATCH | `/update-account` | Update account details |
-| PATCH | `/update-avatar` | Update user avatar |
-| PATCH | `/update-cover-image` | Update cover image |
+| POST | `/change-Current-password` | Change user password |
+| GET | `/get-user` | Get current user profile |
+| PATCH | `/update-details` | Update account details |
+| PATCH | `/update-User-Avatar` | Update user avatar |
+| PATCH | `/update-User-coverImage` | Update cover image |
 | GET | `/c/:username` | Get user channel profile |
 | GET | `/watch-history` | Get user watch history |
 
@@ -343,22 +375,24 @@ For support, email support@example.com or join our Discord channel.
 
 ---
 
-
 ## ✅ Features
 
 ### 🔐 Authentication & Security
+
 - User registration with secure password hashing (bcrypt)
 - JWT-based authentication (Access & Refresh tokens)
 - Password validation and user existence checks
 - Secure file upload handling
 
 ### 📁 File Management
+
 - Multi-file upload support (avatar, cover image)
 - Cloudinary integration for media storage
 - Automatic local file cleanup after upload
 - File type validation and size limits
 
 ### 🎥 Video Platform Features
+
 - Video upload and storage
 - Thumbnail management
 - Video metadata (title, description, duration, views)
@@ -366,6 +400,7 @@ For support, email support@example.com or join our Discord channel.
 - Video publishing controls
 
 ### 🛠 Developer Experience
+
 - ES6+ modules support
 - Async/await error handling wrapper
 - Standardized API responses
@@ -375,6 +410,7 @@ For support, email support@example.com or join our Discord channel.
 - Development server with auto-reload (nodemon)
 
 ### 📊 Database
+
 - MongoDB with Mongoose ODM
 - Schema validation and indexing
 - Reference relationships (User-Video)
@@ -385,6 +421,7 @@ For support, email support@example.com or join our Discord channel.
 ## 📡 API Endpoints
 
 ### User Routes
+
 - `POST /users/register` - Register a new user
   - **Body:** `fullName`, `email`, `username`, `password`
   - **Files:** `avatar` (required), `coverImage` (optional)
@@ -397,27 +434,33 @@ For support, email support@example.com or join our Discord channel.
 ## 🛠 Tech Stack
 
 ### Backend Framework
+
 - **Node.js** - JavaScript runtime
 - **Express.js** - Web framework for API development
 
 ### Database
+
 - **MongoDB** - NoSQL database
 - **Mongoose** - ODM for MongoDB
 
 ### Authentication & Security
+
 - **bcrypt** - Password hashing
 - **jsonwebtoken** - JWT token generation and verification
 
 ### File Handling
+
 - **multer** - Middleware for handling file uploads
 - **cloudinary** - Cloud storage for media files
 
 ### Utilities
+
 - **cors** - Cross-origin resource sharing
 - **cookie-parser** - Cookie handling middleware
 - **dotenv** - Environment variable management
 
 ### Development Tools
+
 - **nodemon** - Development server with auto-reload
 - **prettier** - Code formatting
 
@@ -425,9 +468,9 @@ For support, email support@example.com or join our Discord channel.
 
 ## 🚀 Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm install` | Install all dependencies |
+| Command       | Description                           |
+| ------------- | ------------------------------------- |
+| `npm install` | Install all dependencies              |
 | `npm run dev` | Start development server with nodemon |
 
 ---
@@ -435,6 +478,7 @@ For support, email support@example.com or join our Discord channel.
 ## 🔧 Configuration Details
 
 ### Express App Setup (`app.js`)
+
 - CORS configuration with credentials support
 - JSON and URL-encoded body parsing (16kb limit)
 - Static file serving from `public` directory
@@ -442,21 +486,25 @@ For support, email support@example.com or join our Discord channel.
 - Route mounting for user endpoints
 
 ### Database Connection (`db/index.js`)
+
 - MongoDB connection with error handling
 - Graceful connection logging
 - Process exit on connection failure
 
 ### File Upload (`multer.middleware.js`)
+
 - Disk storage in `public/temp`
 - Original filename preservation
 - Configurable for multiple file fields
 
 ### Cloudinary Integration (`cloudinary.js`)
+
 - Automatic file upload to Cloudinary
 - Local file cleanup after successful upload
 - Error handling for failed uploads
 
 ### Authentication (`user.model.js`)
+
 - Pre-save password hashing middleware
 - Password comparison method
 - JWT token generation methods (access & refresh)
@@ -466,17 +514,20 @@ For support, email support@example.com or join our Discord channel.
 ## 📝 Development Notes
 
 ### Error Handling
+
 - Custom `ApiError` class for consistent error responses
 - `ApiResponse` class for standardized success responses
 - `asyncHandler` wrapper for async route error catching
 
 ### Security Considerations
+
 - Passwords are hashed before storage
 - JWT tokens for stateless authentication
 - File upload validation
 - CORS restrictions
 
 ### TODO / Future Enhancements
+
 - Add login endpoint and authentication middleware
 - Implement video upload and management endpoints
 - Add user profile update functionality
@@ -510,4 +561,4 @@ This project is released under the ISC License.
 
 ---
 
-*Built with ❤️ using Node.js, Express, and MongoDB*
+_Built with ❤️ using Node.js, Express, and MongoDB_
